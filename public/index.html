@@ -23,45 +23,28 @@
     </div>
 
     <div id="logindiv" class="modal">
-      <form class="modal-content animate" action="/login" method="POST">
-        <div class="imgcontainer">
-          <span
-            onclick="document.getElementById('logindiv').style.display='none'"
-            class="close"
-            title="Close Modal"
-            >&times;</span
-          >
-          <!-- <img src="img_avatar2.png" alt="Avatar" class="avatar"> -->
-        </div>
+      <div class="imgcontainer">
+        <span class="close" id="closeBtn" title="Close Modal">&times;</span>
+      </div>
 
-        <div class="container">
-          <label for="emai"><b>email:</b></label>
-          <input
-            type="text"
-            placeholder="Enter an email"
-            name="email"
-            required
-          />
+      <form
+        class="modal-content animate"
+        action="/login"
+        method="POST"
+        id="formId"
+      >
+        <label for="emai"><b>email:</b></label>
+        <input type="text" placeholder="Enter an email" name="email" required />
 
-          <label for="password"><b>Password</b></label>
-          <input
-            type="password"
-            placeholder="Enter a password"
-            name="password"
-            required
-          />
-          <button type="submit" id="loginBtn">login</button>
-          <button type="signup" id="signup">signup</button>
-        </div>
-        <div class="container" style="background-color:#f1f1f1">
-          <button
-            type="button"
-            onclick="document.getElementById('logindiv').style.display='none'"
-            class="cancelbtn"
-          >
-            Cancel
-          </button>
-        </div>
+        <label for="password"><b>Password</b></label>
+        <input
+          type="password"
+          placeholder="Enter a password"
+          name="password"
+          required
+        />
+        <button type="submit" id="loginBtn">login</button>
+        <button type="signup" id="signup">signup</button>
       </form>
     </div>
 
@@ -72,6 +55,7 @@
     >
       add Restaurent
     </a>
+
     <script src="public/index.js"></script>
   </body>
 </html>

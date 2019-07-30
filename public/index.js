@@ -57,10 +57,12 @@ cuisineDivs.forEach(element => {
     ul.innerText = "";
   });
 });
-
+const closeBtn = document.getElementById("closeBtn");
+const logindiv = document.getElementById("logindiv");
+closeBtn.addEventListener("click", () => {
+  logindiv.style.visibility = "Hidden";
+});
 const loginBtn = getElementById("loginBtn");
 loginBtn.addEventListener("click", () => {
-	request(`/profile`, data => {
-
-
+  request(`/profile`, data => {});
 });
