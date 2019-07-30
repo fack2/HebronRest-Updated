@@ -21,18 +21,17 @@ cuisineDivs.forEach(element => {
   img.addEventListener("click", () => {
     request(`/cuisine=${img.alt}`, data => {
       data.forEach(ele => {
-        const restaurantColumn = document.createElement("div");
-        const restaurantContent = document.createElement("div");
+        const restaurantColumn = document.createElement("section");
+        const restaurantContent = document.createElement("section");
 
         const restaurantLogo = document.createElement("img");
-        restaurantLogo.setAttribute("width", "20%");
-        restaurantLogo.setAttribute("height", "20%");
+        restaurantLogo.setAttribute("class", "restaurantLogo");
         const resName = document.createElement("p");
-        const deliviry = document.createElement("p");
+        const delivery = document.createElement("p");
         const phone = document.createElement("p");
         restaurantContent.appendChild(restaurantLogo);
         restaurantContent.appendChild(resName);
-        restaurantContent.appendChild(deliviry);
+        restaurantContent.appendChild(delivery);
         restaurantContent.appendChild(phone);
 
         const li = document.createElement("li");
