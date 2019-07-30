@@ -2,10 +2,10 @@
 
 ## Description:
 
-A website that shows the user several types of cuisines to choose from, and when
-the user clicks on one of them, it shows a list of restaurants that serve that
-type of cuisine. It also allows you to add a resturant if you want, with a list
-of details about it using a form.
+A website that shows the user several types of cuisines to choose from. When the
+user clicks on one of them, it shows a list of restaurants that serve that type
+of cuisine. It also allows you to add a resturant if you want, with a list of
+details about it using a form.
 
 ## User journey:
 
