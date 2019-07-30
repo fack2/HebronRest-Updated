@@ -1,0 +1,36 @@
+{
+    "name": "Restaurant",
+    "version": "1.0.0",
+    "description": "We've created a website that shows the user several types of cuisines to choose from, and when the user clicks on one of them, it shows a list of restaurants that serve that type of cuisine, and it allows you to click on any resturant you want and see a list of details about it, like the menu and the restaurant's name.",
+    "main": "index.js",
+    "scripts": {
+        "test": "node src/server/test/test.js | tap-spec",
+        "testdb": "node src/database/test/databaseTest.js",
+        "start": "node src/server/server.js",
+        "dev": "nodemon src/server/server.js "
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/fack2/Resturant.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/fack2/Resturant/issues"
+    },
+    "homepage": "https://github.com/fack2/Resturant#readme",
+    "devDependencies": {
+        "eslint": "^6.1.0",
+        "nodemon": "^1.19.1",
+        "supertest": "^4.0.2",
+        "tap-spec": "^5.0.0",
+        "tape": "^4.11.0"
+    },
+    "dependencies": {
+        "env2": "^2.2.2",
+        "express": "^4.17.1",
+        "pg": "^7.11.0",
+        "request": "^2.88.0"
+    }
+}

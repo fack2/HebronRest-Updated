@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hebron Rest</title>
+    <link href="public/style.css" rel="stylesheet" />
+</head>
+
+<body>
+    <img class="logo" alt="logo" src="public/images/logo.png" />
+
+    <div class="cuisine-container">
+        <div id="fastfood" class="type">
+            <img class="cuisine" alt="fastfood" src="public/images/1.png">
+        </div>
+        <div id="cafe" class="type">
+            <img class="cuisine" alt="cafe" src="public/images/2.png" />
+        </div>
+        <div id="traditional" class="type">
+            <img class="cuisine" alt="traditional" src="public/images/3.png" />
+
+        </div>
+    </div>
+
+    <div class="container">
+        <form id="contact" action="/create-rest" method="post">
+            <h3>Add Restaurant</h3>
+
+            <label>.<input placeholder="cuisine.." type="cuisine" name="cuisine" required></label>
+            <label>.<input placeholder="Rest Name..." type="name" name="res_name" required autofocus></label>
+            <label>.<input placeholder="location" type="loc" name="location" required></label>
+            <label>.<input placeholder="phone" type="tel" name="phone" required></label>
+            <label>.<input placeholder="delivery" type="del" name="delivery" required></label>
+            <label>.<button name="submit" type="submit" id="contact-submit"
+                    data-submit="...Sending">Submit</button></label>
+
+        </form>
+    </div>
+    <script src="public/index.js"></script>
+</body>
+
+</html>
