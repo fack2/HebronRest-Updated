@@ -3,7 +3,7 @@ const request = (url, cb) => {
     .then(response => response.json())
     .then(data => cb(data))
     .catch(error => {
-      console.log(error);
+      console.log('fetch error', error);
     });
 };
 
@@ -59,4 +59,21 @@ closeBtn.addEventListener('click', () => {
 const addPlace = document.getElementById('addPlace');
 addPlace.addEventListener('click', () => {
   logindiv.style.display = 'block';
+});
+const loginBtn = document.getElementById('loginBtn');
+const email = document.getElementById('email');
+const password = document.getElementById('password');
+const error = document.getElementById('error');
+
+const form = document.getElementById('formId');
+form.addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  if (password.value === '') {
+    error.textContent = 'Please enter a password';
+  }
+
+  if (email.value === '') {
+    error.textContent = 'Please enter an email address';
+  }
 });
