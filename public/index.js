@@ -14,7 +14,6 @@ const request = (url, cb) => {
 const cuisineDivs = document.querySelectorAll(".type");
 const ul = document.createElement("ul");
 
-const submit = document.getElementById("contact-submit");
 
 cuisineDivs.forEach(element => {
   const img = document.querySelector(`#${element.id} img`);
@@ -74,14 +73,20 @@ const password = document.getElementById("password");
 const error = document.getElementById("error");
 
 var form = document.getElementById("formId");
-form.addEventListener("submit", function(event) {
-  event.preventDefault();
+// form.addEventListener("submit", function(event) {
+//   event.preventDefault();
 
-  if (password.value ==='' ) {
-    error.textContent= "Please enter a password";
-  }
+//   if (password.value ==='' ) {
+//     error.textContent= "Please enter a password";
+//   }
 
-  if (email.value==="") {
-    error.textContent = "Please enter an email address";
-  }
-});
+//   if (email.value==="") {
+//     error.textContent = "Please enter an email address";
+//   }
+// });
+// loginBtn.addEventListener('click',()=>{
+  
+//   request('/profile',data=>{
+//     console.log('redirected')
+//   })
+// })

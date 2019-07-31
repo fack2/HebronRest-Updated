@@ -3,6 +3,7 @@ const path = require('path');
 const getData = require('../queries/getData');
 const postData = require('../queries/postData');
 const qs = require('querystring');
+const bcrypt = require('bcrypt');
 
 const cookie = require('cookie');
 const jwt = require('jsonwebtoken');
@@ -11,18 +12,18 @@ const { parse } = require('url');
 
 const homeHandler = (page, request, response) => {
 	let filePath = path.join(__dirname, '..', '..', 'public', `${page}.html`);
-	if (page === 'profile') {
-		const comingToken = cookie.parse(request.headers.cookie).token;
-		 jwt.verify(comingToken, '123456',(err,jwt)=>{
+	// if (page === 'profile') {
+	// 	const comingToken = cookie.parse(request.headers.cookie).token;
+	// 	 jwt.verify(comingToken, '123456',(err,jwt)=>{
 
-			if (cookie.parse(request.headers.cookie).loggedIn === 'true' && jwt) {
-				filePath = path.join(__dirname, '..', '..', 'public', `${page}.html`);
-			} else {
-				filePath = path.join(__dirname, '..', '..', 'public', 'index.html');
+	// 		if (cookie.parse(request.headers.cookie).loggedIn === 'true' && jwt) {
+	// 			filePath = path.join(__dirname, '..', '..', 'public', `${page}.html`);
+	// 		} else {
+	// 			filePath = path.join(__dirname, '..', '..', 'public', 'index.html');
 				
-			}
-		});
-	}
+	// 		}
+	// 	});
+	// }
 	fs.readFile(filePath, (error, file) => {
 		if (error) {
 			console.log(error);
@@ -70,7 +71,7 @@ const publicHandler = (request, response, endpoint) => {
 const cuisineHandler = (request, response) => {
 	const type = request.url.split('=')[1];
 	console.log('type', type);
-	getData(type, (error, result) => {
+	getData.getData(type, (error, result) => {
 		if (error) {
 			return errorHandler(request, response);
 		}
@@ -111,6 +112,56 @@ const addRestaurantHandler = (req, res) => {
 	});
 };
 
+
+
+
+const loginHandler = (request, response) => {
+	let body = '';
+	request.on('data', chunk => {
+		body += chunk.toString();
+	});
+
+
+	request.on('end', () => {
+		console.log('body', body)
+		const { email, password } = qs.parse(body);
+		console.log('email:', email,'password', password)
+
+
+
+		getData.getLoginData(email, (err, passwordInDatabase) => {
+			console.log('paass from db', passwordInDatabase)
+			if (err) {
+				response.writeHead(500, { 'Content-Type': 'text/html' });
+				response.end('Error');
+			}
+			const newpass = passwordInDatabase.password;
+			console.log(newpass)
+			bcrypt.compare(password, newpass,(error, compared) => {
+					
+					if(compared){
+						const token = jwt.sign(email, '123456');
+						console.log('token', token)
+						//response.setHeader('Set-Cookie', `tokennew=${token}`)
+						response.writeHead(302, {Location: '/profile','Set-Cookie': `tokennew=${token}`});
+						response.end();
+					} else if (!compared){
+						
+						response.writeHead(302, { Location: '/' });
+						response.end();
+					}else if(error){						 console.log('login err', error);
+						response.writeHead(500, { 'Content-Type': 'text/html' });
+						response.end('login Error');
+
+					}
+				}
+			);
+		});
+	});
+}
+
+
+
 const errorHandler = (request, response) => {
 	response.writeHead(404, {
 		'content-type': 'text/html'
@@ -123,5 +174,6 @@ module.exports = {
 	publicHandler,
 	cuisineHandler,
 	addRestaurantHandler,
+	loginHandler,
 	errorHandler
 };
