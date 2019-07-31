@@ -13,12 +13,15 @@ const homeHandler = (page, request, response) => {
 	let filePath = path.join(__dirname, '..', '..', 'public', `${page}.html`);
 	if (page === 'profile') {
 		const comingToken = cookie.parse(request.headers.cookie).token;
-		const checkToken = jwt.verify(comingToken, '123456');
-		if (cookie.parse(request.headers.cookie).loggedIn === 'true' && checkToken) {
-			filePath = path.join(__dirname, '..', '..', 'public', `${page}.html`);
-		} else {
-			filePath = path.join(__dirname, '..', '..', 'public', 'index.html');
-		}
+		 jwt.verify(comingToken, '123456',(err,jwt)=>{
+
+			if (cookie.parse(request.headers.cookie).loggedIn === 'true' && jwt) {
+				filePath = path.join(__dirname, '..', '..', 'public', `${page}.html`);
+			} else {
+				filePath = path.join(__dirname, '..', '..', 'public', 'index.html');
+				
+			}
+		});
 	}
 	fs.readFile(filePath, (error, file) => {
 		if (error) {
