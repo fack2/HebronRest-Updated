@@ -1,8 +1,10 @@
 const fs = require("fs");
 const path = require("path");
-const getData = require("../queries/getData");
+const { getData, getLoginData } = require("../queries/getData");
 const postData = require("../queries/postData");
 const qs = require("querystring");
+const bcrypt = require("bcrypt");
+const { sign, verify } = require("jsonwebtoken");
 
 const homeHandler = (request, response) => {
 	const filePath = path.join(__dirname, "..", "..", "public", "index.html");
@@ -56,8 +58,6 @@ const cuisineHandler = (request, response) => {
 		if (error) {
 			return errorHandler(request, response);
 		}
-		console.log("result", result);
-
 		let dynamicData = JSON.stringify(result);
 		response.writeHead(200, {
 			"Content-Type": "application/json"
@@ -70,7 +70,6 @@ const addRestaurantHandler = (req, res) => {
 	let body = "";
 	req.on("data", chunk => {
 		body += chunk.toString();
-		console.log("chunk", body);
 	});
 	req.on("end", () => {
 		const result = qs.parse(body);
@@ -104,10 +103,40 @@ const errorHandler = (request, response) => {
 	response.end("<h1>404 Page Requested Cannot be Found</h1>");
 };
 
+const loginHandler = (request, response) => {
+	let body = "";
+	request.on("data", chunk => {
+		body += chunk.toString();
+	});
+	request.on("end", () => {
+		const { email, password } = qs.parse(body);
+		getLoginData(email, (err, passwordInDAtabase) => {
+			if (err) {
+				response.writeHead(500, { "Content-Type": "text/html" });
+				response.end("Error");
+			}
+			bcrypt.compare(
+				password,
+				passwordInDAtabase[0].password,
+				(error, compared) => {
+					if (error) console.log("err", error);
+					const token = sign(email, "GdklgjldfkjklfjifdjHJKLdfghjk45678");
+					response.writeHead(302, {
+						Location: "/",
+						"Set-Cookie": `token=${token}; HttpOnly`
+					});
+					response.end();
+				}
+			);
+		});
+	});
+};
+
 module.exports = {
 	homeHandler,
 	publicHandler,
 	cuisineHandler,
 	addRestaurantHandler,
-	errorHandler
+	errorHandler,
+	loginHandler
 };

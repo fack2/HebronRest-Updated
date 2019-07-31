@@ -1,13 +1,30 @@
-const dbConnection = require('../database/db_connection');
+const dbConnection = require("../database/db_connection");
 
 const getData = (type, cb) => {
-	dbConnection.query(`select res_name,phone,delivery from restaurant where cuisine = $1`, [ type ], (err, res) => {
-		if (err) {
-			return cb(err);
+	dbConnection.query(
+		`select res_name,phone,delivery from restaurant where cuisine = $1`,
+		[type],
+		(err, res) => {
+			if (err) {
+				return cb(err);
+			}
+			cb(null, res.rows);
 		}
-		console.log('from database', res.rows);
-		cb(null, res.rows);
-	});
+	);
 };
 
-module.exports = getData;
+const getLoginData = (email, cb) => {
+	dbConnection.query(
+		`Select password from users where email = $1`,
+		[email],
+		(err, res) => {
+			if (err) {
+				return cb(err);
+			}
+			cb(null, res.rows);
+			console.log("from getLoginData", res.rows);
+		}
+	);
+};
+
+module.exports = { getData, getLoginData };

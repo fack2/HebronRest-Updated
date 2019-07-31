@@ -18,6 +18,8 @@ create table users(
   password varchar(100) not null
 );
 
+insert into users(name, email, password) values ('Rawan','youlostme17@hotmail.com', '123');
+
 insert into restaurant
   (res_name,cuisine,location, phone, delivery)
 values
