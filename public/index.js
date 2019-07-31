@@ -7,7 +7,7 @@ const request = (url, cb) => {
       return cb(data);
     })
     .catch(error => {
-      console.log(error);
+      console.log('fetch error',error);
     });
 };
 
@@ -60,15 +60,32 @@ cuisineDivs.forEach(element => {
 const closeBtn = document.getElementById("closeBtn");
 const logindiv = document.getElementById("logindiv");
 closeBtn.addEventListener('click', () => {
-  
-  logindiv.style.display = 'none';
+  // logindiv.classList.add("mystyle");
+   logindiv.style.display = 'none';
 });
+
 const addPlace= document.getElementById("addPlace");
 addPlace.addEventListener('click',()=>{
   logindiv.style.display = 'block';
 
 })
 const loginBtn = document.getElementById("loginBtn");
-loginBtn.addEventListener("click", () => {
-  request(`/profile`, data => {});
+const email = document.getElementById("email");
+const password = document.getElementById("password");
+const error = document.getElementById("error");
+
+var form = document.getElementById("formId");
+form.addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  console.log("listner works");
+  
+
+  if (password.value ==='' ) {
+    error.textContent= "Please enter a password";
+  }
+
+  if (email.value==="") {
+    error.textContent = "Please enter an email address";
+  }
 });
