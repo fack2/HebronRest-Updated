@@ -40,11 +40,12 @@ cuisineDivs.forEach(element => {
 
         restaurantLogo.src = `./public/images/${imageName}.png`;
         resName.innerText = ele.res_name;
-        let delivery = "Yes";
+        let deliveryStatus = "Yes";
         if (!ele.delivery) {
-          delivery = "No";
+          deliveryStatus = "No";
         }
-        deliviry.innerText = `Deliviry: ${delivery}`;
+
+        delivery.innerText = `Delivery: ${deliveryStatus}`;
         phone.innerText = `Phone: ${ele.phone}`;
         restaurantColumn.appendChild(restaurantContent);
         li.appendChild(restaurantColumn);
@@ -58,10 +59,16 @@ cuisineDivs.forEach(element => {
 });
 const closeBtn = document.getElementById("closeBtn");
 const logindiv = document.getElementById("logindiv");
-closeBtn.addEventListener("click", () => {
-  logindiv.style.visibility = "Hidden";
+closeBtn.addEventListener('click', () => {
+  
+  logindiv.style.display = 'none';
 });
-const loginBtn = getElementById("loginBtn");
+const addPlace= document.getElementById("addPlace");
+addPlace.addEventListener('click',()=>{
+  logindiv.style.display = 'block';
+
+})
+const loginBtn = document.getElementById("loginBtn");
 loginBtn.addEventListener("click", () => {
   request(`/profile`, data => {});
 });
