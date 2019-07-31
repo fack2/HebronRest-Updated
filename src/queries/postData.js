@@ -8,9 +8,24 @@ const postData = (result, cb) => {
 			if (err) {
 				return cb(err);
 			}
+			// console.log('data from post  data what to insert', res.rows);
+			cb(null, res.rows);
+		}
+	);
+};
+
+
+const postUserData = (email, password, cb) => {
+	dbConnection.query(
+		`INSERT INTO users (email, password) VALUES ($1,$2)`,
+		[ email, password],
+		(err, res) => {
+			if (err) {
+				return cb(err);
+			}
 			console.log('data from post  data what to insert', res.rows);
 			cb(null, res.rows);
 		}
 	);
 };
-module.exports = postData;
+module.exports = {postData, postUserData};
