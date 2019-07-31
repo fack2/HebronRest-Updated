@@ -29,32 +29,30 @@
 
       <form
         class="modal-content animate"
-        action="/login"
+        action="/profile"
         method="POST"
         id="formId"
+        
       >
         <label for="emai"><b>email:</b></label>
-        <input type="text" placeholder="Enter an email" name="email" required />
+        <input type="email" id="email" placeholder="Enter an email" name="email"  />
 
         <label for="password"><b>Password</b></label>
         <input
           type="password"
           placeholder="Enter a password"
           name="password"
-          required
+          id="password"
+          pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" 
+          
         />
+        <p id="error" class="error" aria-live="polite"></p>
         <button type="submit" id="loginBtn">login</button>
-        <button type="signup" id="signup">signup</button>
+        <button  id="signup">signup</button>
       </form>
     </div>
 
-    <a
-      id="addPlace"
-      onclick="document.getElementById('logindiv').style.display='block'"
-      style="width:auto;"
-    >
-      add Restaurent
-    </a>
+    <a id="addPlace">add Restaurent </a>
 
     <script src="public/index.js"></script>
   </body>
