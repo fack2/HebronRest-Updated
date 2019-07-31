@@ -60,7 +60,6 @@ cuisineDivs.forEach(element => {
 const closeBtn = document.getElementById("closeBtn");
 const logindiv = document.getElementById("logindiv");
 closeBtn.addEventListener('click', () => {
-  // logindiv.classList.add("mystyle");
    logindiv.style.display = 'none';
 });
 
