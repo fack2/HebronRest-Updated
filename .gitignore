@@ -55,12 +55,7 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file
-<<<<<<< Updated upstream
-
-=======
 config.env
->>>>>>> Stashed changes
-
 # next.js build output
 .next
 config.env
