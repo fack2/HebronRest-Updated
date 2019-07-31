@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>profile</title>
+    <link href="public/style.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="addRestaurantContainer allForms ">
+            <form id="restaurantForm" class="restaurantForm" action="/create-rest" method="post">
+                <h3>Add Restaurant</h3>
+    
+                <label>.<input placeholder="cuisine.." type="cuisine" name="cuisine" required></label>
+                <label>.<input placeholder="Rest Name..." type="name" name="res_name" required autofocus></label>
+                <label>.<input placeholder="location" type="loc" name="location" required></label>
+                <label>.<input placeholder="phone" type="tel" name="phone" required></label>
+                <label>.<input placeholder="delivery" type="del" name="delivery" required></label>
+                <label>.<button name="submit" type="submit" id="contact-submit"
+                        data-submit="...Sending">Submit</button></label>
+    
+            </form>
+        </div>
+</body>
+</html>

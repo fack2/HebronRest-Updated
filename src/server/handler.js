@@ -1,33 +1,38 @@
 const fs = require('fs');
 const path = require('path');
-const cookie = require('cookie');
 const { parse } = require('url');
 const qs = require('querystring');
 const bcrypt = require('bcrypt');
 const { sign, verify} = require('jsonwebtoken');
 const {postData, postUserData} = require('../queries/postData');
 const { getData, getLoginData } = require('../queries/getData');
+const cookie = require('cookie');
 
 
+const homeHandler = (page, request, response) => {
+	let filePath = path.join(__dirname, '..', '..', 'public', `${page}.html`);
+	if (page === 'profile') {
+		const comingToken = cookie.parse(request.headers.cookie).token;
+		 jwt.verify(comingToken, '123456',(err,jwt)=>{
 
-const errorHandler = (request, response) => {
-	response.writeHead(404, {
-		'content-type': 'text/html'
-	});
-	response.end('<h1>404 Page Requested Cannot be Found</h1>');
-};
-const homeHandler = (request, response) => {
-	const filePath = path.join(__dirname, "..", "..", "public", "index.html");
+			if (cookie.parse(request.headers.cookie).loggedIn === 'true' && jwt) {
+				filePath = path.join(__dirname, '..', '..', 'public', `${page}.html`);
+			} else {
+				filePath = path.join(__dirname, '..', '..', 'public', 'index.html');
+				
+			}
+		});
+	}
 	fs.readFile(filePath, (error, file) => {
 		if (error) {
 			console.log(error);
 			response.writeHead(500, {
-				"Content-Type": "text/html"
+				'Content-Type': 'text/html'
 			});
-			response.end("<h1>Server Error</h1>");
+			response.end('<h1>Server Error</h1>');
 		} else {
 			response.writeHead(200, {
-				"Content-Type": "text/html"
+				'Content-Type': 'text/html'
 			});
 			response.end(file);
 		}
@@ -92,6 +97,12 @@ const addRestaurantHandler = (req, res) => {
 	});
 };
 
+const errorHandler = (request, response) => {
+	response.writeHead(404, {
+		'content-type': 'text/html'
+	});
+	response.end('<h1>404 Page Requested Cannot be Found</h1>');
+};
 
 
 const signUpHandler = (request , response)=>{
