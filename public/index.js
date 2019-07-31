@@ -67,13 +67,12 @@ const error = document.getElementById('error');
 
 const form = document.getElementById('formId');
 form.addEventListener('submit', function(event) {
-  event.preventDefault();
 
   if (password.value === '') {
     error.textContent = 'Please enter a password';
-  }
-
-  if (email.value === '') {
+  }else if (email.value === '') {
     error.textContent = 'Please enter an email address';
+  } else {
+    form.submit()
   }
 });

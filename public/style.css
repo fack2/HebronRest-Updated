@@ -3,7 +3,10 @@
 	margin: 0;
 	padding: 0;
 }
-
+body {
+	font-family: "Yanone Kaffeesatz", sans-serif;
+	font-size: 26px;
+}
 .logo {
 	display: block;
 	margin: 3% 15% 0% 15%;
@@ -18,26 +21,14 @@
 	border-radius: 5%;
 }
 
-.container {
-	width: 95%;
-	margin: 0 auto;
-	position: relative;
-}
-
-#contact {
+.allForms {
 	background: #f9f9f9;
 	padding: 6%;
 	margin: 38% 0%;
 	box-shadow: 0 0 20px 0 rgba(68, 19, 4, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
 
-#contact h3 {
-	font-size: 30px;
-	font-weight: 300;
-	margin-bottom: 5%;
-}
-
-#contact input {
+.allForms input {
 	width: 92%;
 	border: 1px solid #ccc;
 	background: #fff;
@@ -45,7 +36,7 @@
 	padding: 10px;
 }
 
-#contact button {
+.allForms button {
 	cursor: pointer;
 	width: 100%;
 	border: none;
@@ -55,14 +46,12 @@
 	padding: 10px;
 	font-size: 15px;
 }
-body {
-	font-family: "Yanone Kaffeesatz", sans-serif;
-	font-size: 26px;
+.addRestaurantContainer h3 {
+	font-size: 30px;
+	font-weight: 300;
+	margin-bottom: 5%;
 }
-body {
-	font-family: "Yanone Kaffeesatz", sans-serif;
-	font-size: 26px;
-}
+
 li {
 	margin: 6% 0% 5% 40%;
 }
@@ -88,13 +77,6 @@ label {
 	padding-top: 60px;
 }
 
-.modal-content {
-	background-color: #fefefe;
-	margin: 5% auto 15% auto;
-	border: 1px solid #888;
-	width: 80%;
-}
-
 .close {
 	position: absolute;
 	right: 25px;
@@ -107,52 +89,4 @@ label {
 .close:focus {
 	color: red;
 	cursor: pointer;
-}
-
-.animate {
-	-webkit-animation: animatezoom 0.6s;
-	animation: animatezoom 0.6s;
-}
-.restaurantLogo {
-	height: 20%;
-	width: 20%;
-}
-
-.modal {
-	display: none;
-	position: fixed;
-	z-index: 1;
-	left: 0;
-	top: 0;
-	width: 100%;
-	overflow: auto;
-	background-color: rgb(0, 0, 0);
-	background-color: rgba(0, 0, 0, 0.4);
-	padding-top: 60px;
-}
-
-.modal-content {
-	background-color: #fefefe;
-	margin: 5% auto 15% auto;
-	border: 1px solid #888;
-	width: 80%;
-}
-
-.close {
-	position: absolute;
-	right: 25px;
-	top: 0;
-	color: #000;
-	font-size: 35px;
-	font-weight: bold;
-}
-.close:hover,
-.close:focus {
-	color: red;
-	cursor: pointer;
-}
-
-.animate {
-	-webkit-animation: animatezoom 0.6s;
-	animation: animatezoom 0.6s;
 }

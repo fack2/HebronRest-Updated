@@ -18,7 +18,7 @@ create table users(
   password varchar(100) not null
 );
 
-insert into users(name, email, password) values ('Rawan','youlostme17@hotmail.com', '123');
+insert into users(name, email, password) values ('saja','yusra.lahaleeh@gmail.com', '$2a$10$DHNbvnuWUZ1R4mos9IZ0TOJC61p55y7cFTmdConf62zlp03k5FjyG');
 
 insert into restaurant
   (res_name,cuisine,location, phone, delivery)

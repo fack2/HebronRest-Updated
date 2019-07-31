@@ -28,12 +28,12 @@
 			</div>
 
 			<form
-				class="modal-content animate"
+				class="modal-content allForms"
 				action="/profile"
 				method="POST"
 				id="formId"
 			>
-				<label for="emai"><b>email:</b></label>
+				<label for="email"><b>email:</b></label>
 				<input
 					type="email"
 					id="email"
@@ -47,7 +47,6 @@
 					placeholder="Enter a password"
 					name="password"
 					id="password"
-					pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
 				/>
 				<p id="error" class="error" aria-live="polite"></p>
 				<button type="submit" id="loginBtn">login</button>

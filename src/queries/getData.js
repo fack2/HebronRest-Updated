@@ -14,15 +14,19 @@ const getData = (type, cb) => {
 };
 
 const getLoginData = (email, cb) => {
+  console.log("database", email);
+
   dbConnection.query(
-    `Select password from users where email = $1`,
+    `select password from users where email = $1`,
     [email],
     (err, res) => {
       if (err) {
+        console.log('im heere')
         return cb(err);
       }
-      cb(null, res.rows);
       console.log('from getLoginData', res.rows);
+
+      cb(null, res.rows);
     }
   );
 };
