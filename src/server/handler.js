@@ -12,9 +12,9 @@ const { parse } = require('url');
 const homeHandler = (page, request, response) => {
 	let filePath = path.join(__dirname, '..', '..', 'public', `${page}.html`);
 	if (page === 'profile') {
-		console.log('cookies: ', request.headers.cookie);
-		console.log('login status from cookie', cookie.parse(request.headers.cookie).loggedIn);
-		if (cookie.parse(request.headers.cookie).loggedIn === 'true') {
+		const comingToken = cookie.parse(request.headers.cookie).token;
+		const checkToken = jwt.verify(comingToken, '123456');
+		if (cookie.parse(request.headers.cookie).loggedIn === 'true' && checkToken) {
 			filePath = path.join(__dirname, '..', '..', 'public', `${page}.html`);
 		} else {
 			filePath = path.join(__dirname, '..', '..', 'public', 'index.html');
@@ -102,11 +102,7 @@ const addRestaurantHandler = (req, res) => {
 			result.deliviry,
 			'phone'
 		);
-		postData(result, (err, data) => {
-			console.log('err', err);
-			console.log('data', data);
-			console.log('result', result);
-		});
+		postData(result, (err, data) => {});
 		res.writeHead(302, { Location: '/' });
 		res.end();
 	});

@@ -1,8 +1,6 @@
 const { homeHandler, publicHandler, cuisineHandler, addRestaurantHandler, errorHandler } = require('./handler');
 const router = (request, response) => {
 	const endpoint = request.url;
-	console.log('hi', endpoint);
-	console.log('there', request);
 	if (endpoint === '/') {
 		homeHandler('index', request, response);
 	} else if (endpoint.indexOf('public') !== -1) {
