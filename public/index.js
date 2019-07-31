@@ -78,9 +78,6 @@ var form = document.getElementById("formId");
 form.addEventListener("submit", function(event) {
   event.preventDefault();
 
-  console.log("listner works");
-  
-
   if (password.value ==='' ) {
     error.textContent= "Please enter a password";
   }
