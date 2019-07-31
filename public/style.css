@@ -18,27 +18,27 @@
 	border-radius: 5%;
 }
 
-.container {
+.addRestaurantContainer {
 	width: 95%;
 	margin: 0 auto;
 	position: relative;
 }
 
-#contact {
+.restaurantForm {
 	background: #f9f9f9;
 	padding: 6%;
 	margin: 38% 0%;
 	box-shadow: 0 0 20px 0 rgba(68, 19, 4, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
 
-#contact h3 {
+.restaurantForm h3 {
 	display: block;
 	font-size: 30px;
 	font-weight: 300;
 	margin-bottom: 5%;
 }
 
-#contact input {
+.restaurantForm input {
 	width: 92%;
 	border: 1px solid #ccc;
 	background: #fff;
@@ -46,7 +46,7 @@
 	padding: 10px;
 }
 
-#contact button {
+.restaurantForm button {
 	cursor: pointer;
 	width: 100%;
 	border: none;
