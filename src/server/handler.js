@@ -99,7 +99,7 @@ const addRestaurantHandler = (req, res) => {
 			'phone',
 			result.phone,
 			'delivery',
-			result.deliviry,
+			result.delivery,
 			'phone'
 		);
 		postData(result, (err, data) => {});

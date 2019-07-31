@@ -1,6 +1,5 @@
 BEGIN;
-  DROP TABLE IF EXISTS restaurant , cuisine
-  CASCADE;
+  DROP TABLE IF EXISTS restaurant , users CASCADE;
 
 
 create table restaurant
@@ -11,6 +10,12 @@ create table restaurant
   location text not null,
   phone text not null,
   delivery boolean not null
+);
+create table users(
+  id serial primary key,
+  name varchar(50) not null,
+  email varchar(100) not null,
+  password varchar(100) not null
 );
 
 insert into restaurant

@@ -1,30 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hebron Rest</title>
     <link href="public/style.css" rel="stylesheet" />
-</head>
+  </head>
 
-<body>
+  <body>
     <img class="logo" alt="logo" src="public/images/logo.png" />
 
     <div class="cuisine-container">
-        <div id="fastfood" class="type">
-            <img class="cuisine" alt="fastfood" src="public/images/1.png">
-        </div>
-        <div id="cafe" class="type">
-            <img class="cuisine" alt="cafe" src="public/images/2.png" />
-        </div>
-        <div id="traditional" class="type">
-            <img class="cuisine" alt="traditional" src="public/images/3.png" />
-
-        </div>
+      <div id="fastfood" class="type">
+        <img class="cuisine" alt="fastfood" src="public/images/1.png" />
+      </div>
+      <div id="cafe" class="type">
+        <img class="cuisine" alt="cafe" src="public/images/2.png" />
+      </div>
+      <div id="traditional" class="type">
+        <img class="cuisine" alt="traditional" src="public/images/3.png" />
+      </div>
     </div>
    
 
-    <script src="public/index.js"></script>
-</body>
+    <div id="logindiv" class="modal">
+      <div class="imgcontainer">
+        <span class="close" id="closeBtn" title="Close Modal">&times;</span>
+      </div>
 
+      <form
+        class="modal-content animate"
+        action="/profile"
+        method="POST"
+        id="formId"
+        
+      >
+        <label for="emai"><b>email:</b></label>
+        <input type="email" id="email" placeholder="Enter an email" name="email"  />
+
+        <label for="password"><b>Password</b></label>
+        <input
+          type="password"
+          placeholder="Enter a password"
+          name="password"
+          id="password"
+          pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" 
+          
+        />
+        <p id="error" class="error" aria-live="polite"></p>
+        <button type="submit" id="loginBtn">login</button>
+        <button  id="signup">signup</button>
+      </form>
+    </div>
+
+    <a id="addPlace">add Restaurent </a>
+
+    <script src="public/index.js"></script>
+  </body>
 </html>
