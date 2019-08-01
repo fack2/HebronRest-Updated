@@ -21,6 +21,7 @@
         <img class="cuisine" alt="traditional" src="public/images/3.png" />
       </div>
     </div>
+    <!-- <button id="signupform">signup</button> -->
 
     <div id="logindiv" class="modal">
       <div class="imgcontainer">
@@ -50,7 +51,7 @@
         />
         <p id="error" class="error" aria-live="polite"></p>
         <button type="submit" id="loginBtn">login</button>
-        <button id="signup">signup</button>
+        <input type="button" value="signUp" id="signupform" />
       </form>
     </div>
 
@@ -64,27 +65,27 @@
         method="POST"
         id="signUpId"
       >
-        <label for="email"><b>email:</b></label>
+        <label for="signUpemail"><b>email:</b></label>
         <input
           type="email"
-          id="email"
+          id="signUpemail"
           placeholder="Enter an email"
-          name="email"
+          name="signUpemail"
         />
 
-        <label for="password"><b>Password</b></label>
+        <label for="signUppassword"><b>Password</b></label>
         <input
           type="password"
           placeholder="Enter a password"
-          name="password"
-          id="password"
+          name="signUppassword"
+          id="signUppassword"
         />
 
         <input
           type="password"
           placeholder="confirm a password"
           name="confirmedPassword"
-          id="password"
+          id="confirmedpassword"
         />
 
         <p id="error" class="error" aria-live="polite"></p>

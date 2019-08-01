@@ -7,24 +7,23 @@ const { sign, verify} = require('jsonwebtoken');
 const {postData, postUserData} = require('../queries/postData');
 const { getData, getLoginData } = require('../queries/getData');
 const cookie = require('cookie');
+const alert = require('alert-node')
 
 
 const homeHandler = (page, request, response) => {
 	let filePath = path.join(__dirname, '..', '..', 'public', `${page}.html`);
-	// if (page === 'profile') {
-	// 	console.log(comingToken);
-	// 	const comingToken = cookie.parse(request.headers.cookie).token;
-	// 	console.log(comingToken);
-	// 	 jwt.verify(comingToken, '123456',(err,jwt)=>{
+	if (page === 'profile') {
+		const comingToken = cookie.parse(request.headers.cookie).token;
+		 verify(comingToken, process.env.secret,(err,result)=>{
 
-	// 		if (cookie.parse(request.headers.cookie).loggedIn === 'true' && jwt) {
-	// 			filePath = path.join(__dirname, '..', '..', 'public', `${page}.html`);
-	// 		} else {
-	// 			filePath = path.join(__dirname, '..', '..', 'public', 'index.html');
+			if (result) {
+				filePath = path.join(__dirname, '..', '..', 'public', `${page}.html`);
+			} else {
+				filePath = path.join(__dirname, '..', '..', 'public', 'index.html');
 				
-	// 		}
-	// 	});
-	// }
+			}
+		});
+	}
 	fs.readFile(filePath, (error, file) => {
 		if (error) {
 			console.log(error);
@@ -70,12 +69,10 @@ const publicHandler = (request, response, endpoint) => {
 
 const cuisineHandler = (request, response) => {
 	const type = request.url.split('=')[1];
-	console.log('type', type);
 	getData(type, (error, result) => {
 		if (error) {
 			return errorHandler(request, response);
 		}
-		console.log('result', result);
 
 		let dynamicData = JSON.stringify(result);
 		response.writeHead(200, {
@@ -89,7 +86,6 @@ const addRestaurantHandler = (req, res) => {
 	let body = '';
 	req.on('data', (chunk) => {
 		body += chunk.toString();
-		console.log('chunk', body);
 	});
 	req.on('end', () => {
 		const result = qs.parse(body);
@@ -114,27 +110,24 @@ let body = '';
 request.on('data', chunk =>{
 	body+= chunk.toString();
 })
-
 request.on('end', ()=>{
 	const result = qs.parse(body);
-	console.log(body);
-	console.log("result",result.email)
 
-	bcrypt.hash(result.password, 10, (hashErr, hashedPassword) => {
+	bcrypt.hash(result.signUppassword, 10, (hashErr, hashedPassword) => {
 		if (hashErr) {
-		  res.statusCode = 500;
-		  res.end('Error registering')
-		  return
+		  response.statusCode = 500;
+		  response.end('Error registering')
 		}
 	
 
-postUserData(result.email,hashedPassword,  (err, data) =>{
+postUserData(result.signUpemail,hashedPassword,  (err, data) =>{
 	if (err) {
-		console.log(err);
-        response.writeHead(500, {
-          "Content-Type": "text/html"
-        });
-        response.end("<h1>Server Error</h1>");
+        response.writeHead(302, {
+		Location : '/'		  
+		});
+		alert("email exists")
+
+        response.end();
       }
       response.writeHead(302, { 'Location': '/' });
       response.end()
@@ -145,8 +138,7 @@ postUserData(result.email,hashedPassword,  (err, data) =>{
 }
 
 const logOutHandler = (request, response) =>{
-	console.log("hello")
-	response.writeHead(302, {Location: '/','Set-Cookie': `tokennew=0`});
+	response.writeHead(302, {Location: '/','Set-Cookie': `token=0`});
 response.end()
 }
 
@@ -160,39 +152,43 @@ const loginHandler = (request, response) => {
 
 
 	request.on('end', () => {
-		console.log('body', body)
 		const { email, password } = qs.parse(body);
-		console.log('email:', email,'password', password)
 
 
 
-		getLoginData(email, (err, hashedPassword) => {
-			if (err) {
-				response.writeHead(500, { 'Content-Type': 'text/html' });
-				response.end('Error');
-			}
+		getLoginData(email, (err,hashedPassword) => {
+			if(err){
+				alert("email doesn't exist")
+				response.writeHead(302, { Location: '/' });
+				response.end("<h1> error</h1>");
+				}else{
+
+		
+
 			const newpass = hashedPassword.password;
-			console.log(newpass)
 			bcrypt.compare(password, newpass,(error, compared) => {
 
 					if(compared){
-						const token = sign(email, '123456');
-						console.log('token', token)
-						//response.setHeader('Set-Cookie', `tokennew=${token}`)
-						response.writeHead(302, {Location: '/profile','Set-Cookie': `tokennew=${token}`});
+						const token = sign(email, process.env.secret);
+						response.writeHead(302, {Location: '/profile','Set-Cookie': `token=${token}`});
 						response.end();
 					} else if (!compared){
-
+						alert('password incorrect')
 						response.writeHead(302, { Location: '/' });
 						response.end();
-					}else if(error){						 console.log('login err', error);
+					}else if(error){						
 						response.writeHead(500, { 'Content-Type': 'text/html' });
 						response.end('login Error');
 
 					}
 				}
 			);
+		}
+
+
 		});
+
+
 	});
 }
 
