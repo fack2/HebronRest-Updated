@@ -4,7 +4,9 @@ const {
   cuisineHandler,
   addRestaurantHandler,
   errorHandler,
-  signUpHandler
+  loginHandler,
+  signUpHandler,
+  logOutHandler
 } = require("./handler");
 const router = (request, response) => {
 	const endpoint = request.url;
@@ -18,9 +20,14 @@ const router = (request, response) => {
 		addRestaurantHandler(request, response);
 	} else if (endpoint === '/profile') {
 		homeHandler('profile', request, response);
-	} else if (endpoint.indexOf("/signUp") !== -1) {
+	} else if (endpoint.indexOf("/login") !== -1) {
+		loginHandler( request, response);
+	}
+	else if (endpoint.indexOf("/signUp") !== -1) {
 		signUpHandler(request, response);
-	  } 
+	  } else if (endpoint.indexOf("/logout") !== -1) {
+		logOutHandler( request, response);
+	}
 	else {
 		errorHandler(request, response);
 	}

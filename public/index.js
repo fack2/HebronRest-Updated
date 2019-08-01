@@ -74,18 +74,18 @@ const password = document.getElementById("password");
 const error = document.getElementById("error");
 
 var form = document.getElementById("formId");
-form.addEventListener("submit", function(event) {
+// form.addEventListener("submit", function(event) {
   
-  event.preventDefault();
+//   event.preventDefault();
 
-  if (password.value === "") {
-    error.textContent = "Please enter a password";
-  }
+//   if (password.value === "") {
+//     error.textContent = "Please enter a password";
+//   }
 
-  if (email.value === "") {
-    error.textContent = "Please enter an email address";
-  }
-});
+//   if (email.value === "") {
+//     error.textContent = "Please enter an email address";
+//   }
+// });
 
 const closeOutBtn = document.getElementById("closeOutBtn");
 const logOutdiv = document.getElementById("logOutdiv");

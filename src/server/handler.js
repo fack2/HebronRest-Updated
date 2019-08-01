@@ -11,18 +11,20 @@ const cookie = require('cookie');
 
 const homeHandler = (page, request, response) => {
 	let filePath = path.join(__dirname, '..', '..', 'public', `${page}.html`);
-	if (page === 'profile') {
-		const comingToken = cookie.parse(request.headers.cookie).token;
-		 jwt.verify(comingToken, '123456',(err,jwt)=>{
+	// if (page === 'profile') {
+	// 	console.log(comingToken);
+	// 	const comingToken = cookie.parse(request.headers.cookie).token;
+	// 	console.log(comingToken);
+	// 	 jwt.verify(comingToken, '123456',(err,jwt)=>{
 
-			if (cookie.parse(request.headers.cookie).loggedIn === 'true' && jwt) {
-				filePath = path.join(__dirname, '..', '..', 'public', `${page}.html`);
-			} else {
-				filePath = path.join(__dirname, '..', '..', 'public', 'index.html');
+	// 		if (cookie.parse(request.headers.cookie).loggedIn === 'true' && jwt) {
+	// 			filePath = path.join(__dirname, '..', '..', 'public', `${page}.html`);
+	// 		} else {
+	// 			filePath = path.join(__dirname, '..', '..', 'public', 'index.html');
 				
-			}
-		});
-	}
+	// 		}
+	// 	});
+	// }
 	fs.readFile(filePath, (error, file) => {
 		if (error) {
 			console.log(error);
@@ -105,6 +107,8 @@ const errorHandler = (request, response) => {
 };
 
 
+
+
 const signUpHandler = (request , response)=>{
 let body = ''; 
 request.on('data', chunk =>{
@@ -139,11 +143,67 @@ postUserData(result.email,hashedPassword,  (err, data) =>{
 
 });
 }
+
+const logOutHandler = (request, response) =>{
+	console.log("hello")
+	response.writeHead(302, {Location: '/','Set-Cookie': `tokennew=0`});
+response.end()
+}
+
+
+
+const loginHandler = (request, response) => {
+	let body = '';
+	request.on('data', chunk => {
+		body += chunk.toString();
+	});
+
+
+	request.on('end', () => {
+		console.log('body', body)
+		const { email, password } = qs.parse(body);
+		console.log('email:', email,'password', password)
+
+
+
+		getLoginData(email, (err, hashedPassword) => {
+			if (err) {
+				response.writeHead(500, { 'Content-Type': 'text/html' });
+				response.end('Error');
+			}
+			const newpass = hashedPassword.password;
+			console.log(newpass)
+			bcrypt.compare(password, newpass,(error, compared) => {
+
+					if(compared){
+						const token = sign(email, '123456');
+						console.log('token', token)
+						//response.setHeader('Set-Cookie', `tokennew=${token}`)
+						response.writeHead(302, {Location: '/profile','Set-Cookie': `tokennew=${token}`});
+						response.end();
+					} else if (!compared){
+
+						response.writeHead(302, { Location: '/' });
+						response.end();
+					}else if(error){						 console.log('login err', error);
+						response.writeHead(500, { 'Content-Type': 'text/html' });
+						response.end('login Error');
+
+					}
+				}
+			);
+		});
+	});
+}
+
+
 module.exports = {
   homeHandler,
   publicHandler,
   cuisineHandler,
   addRestaurantHandler,
   errorHandler,
-  signUpHandler
+  signUpHandler,
+  loginHandler,
+  logOutHandler
 };

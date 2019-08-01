@@ -10,4 +10,23 @@ const getData = (type, cb) => {
 	});
 };
 
-module.exports = getData;
+const getLoginData = (email, cb) => {
+	console.log("database", email);
+
+	dbConnection.query(
+		`select password from users where email = $1`,
+		[email],
+		(err, res) => {
+			if (err) {
+				console.log('im heere')
+				return cb(err);
+			}
+			console.log('from getLoginData', res.rows[0]);
+
+			cb(null, res.rows[0]);
+		}
+	);
+};
+
+module.exports = { getData, getLoginData};
+
