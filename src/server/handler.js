@@ -1,21 +1,22 @@
 const fs = require('fs');
 const path = require('path');
-const getData = require('../queries/getData');
-const postData = require('../queries/postData');
-const qs = require('querystring');
-
-const cookie = require('cookie');
-const jwt = require('jsonwebtoken');
-
 const { parse } = require('url');
+const qs = require('querystring');
+const bcrypt = require('bcrypt');
+const { sign, verify} = require('jsonwebtoken');
+const {postData, postUserData} = require('../queries/postData');
+const { getData, getLoginData } = require('../queries/getData');
+const cookie = require('cookie');
+const alert = require('alert-node')
+
 
 const homeHandler = (page, request, response) => {
 	let filePath = path.join(__dirname, '..', '..', 'public', `${page}.html`);
 	if (page === 'profile') {
 		const comingToken = cookie.parse(request.headers.cookie).token;
-		 jwt.verify(comingToken, '123456',(err,jwt)=>{
+		 verify(comingToken, process.env.secret,(err,result)=>{
 
-			if (cookie.parse(request.headers.cookie).loggedIn === 'true' && jwt) {
+			if (result) {
 				filePath = path.join(__dirname, '..', '..', 'public', `${page}.html`);
 			} else {
 				filePath = path.join(__dirname, '..', '..', 'public', 'index.html');
@@ -38,7 +39,6 @@ const homeHandler = (page, request, response) => {
 		}
 	});
 };
-
 const publicHandler = (request, response, endpoint) => {
 	const extension = endpoint.split('.')[1];
 	const extensionType = {
@@ -69,12 +69,10 @@ const publicHandler = (request, response, endpoint) => {
 
 const cuisineHandler = (request, response) => {
 	const type = request.url.split('=')[1];
-	console.log('type', type);
 	getData(type, (error, result) => {
 		if (error) {
 			return errorHandler(request, response);
 		}
-		console.log('result', result);
 
 		let dynamicData = JSON.stringify(result);
 		response.writeHead(200, {
@@ -88,23 +86,9 @@ const addRestaurantHandler = (req, res) => {
 	let body = '';
 	req.on('data', (chunk) => {
 		body += chunk.toString();
-		console.log('chunk', body);
 	});
 	req.on('end', () => {
 		const result = qs.parse(body);
-		console.log(
-			'cuisine',
-			result.cuisine,
-			'name',
-			result.res_name,
-			'location',
-			result.location,
-			'phone',
-			result.phone,
-			'delivery',
-			result.delivery,
-			'phone'
-		);
 		postData(result, (err, data) => {});
 		res.writeHead(302, { Location: '/' });
 		res.end();
@@ -118,10 +102,104 @@ const errorHandler = (request, response) => {
 	response.end('<h1>404 Page Requested Cannot be Found</h1>');
 };
 
+
+
+
+const signUpHandler = (request , response)=>{
+let body = ''; 
+request.on('data', chunk =>{
+	body+= chunk.toString();
+})
+request.on('end', ()=>{
+	const result = qs.parse(body);
+
+	bcrypt.hash(result.signUppassword, 10, (hashErr, hashedPassword) => {
+		if (hashErr) {
+		  response.statusCode = 500;
+		  response.end('Error registering')
+		}
+	
+
+postUserData(result.signUpemail,hashedPassword,  (err, data) =>{
+	if (err) {
+        response.writeHead(302, {
+		Location : '/'		  
+		});
+		alert("email exists")
+
+        response.end();
+      }
+      response.writeHead(302, { 'Location': '/' });
+      response.end()
+} )
+})
+
+});
+}
+
+const logOutHandler = (request, response) =>{
+	response.writeHead(302, {Location: '/','Set-Cookie': `token=0`});
+response.end()
+}
+
+
+
+const loginHandler = (request, response) => {
+	let body = '';
+	request.on('data', chunk => {
+		body += chunk.toString();
+	});
+
+
+	request.on('end', () => {
+		const { email, password } = qs.parse(body);
+
+
+
+		getLoginData(email, (err,hashedPassword) => {
+			if(err){
+				alert("email doesn't exist")
+				response.writeHead(302, { Location: '/' });
+				response.end("<h1> error</h1>");
+				}else{
+
+		
+
+			const newpass = hashedPassword.password;
+			bcrypt.compare(password, newpass,(error, compared) => {
+
+					if(compared){
+						const token = sign(email, process.env.secret);
+						response.writeHead(302, {Location: '/profile','Set-Cookie': `token=${token}`});
+						response.end();
+					} else if (!compared){
+						alert('password incorrect')
+						response.writeHead(302, { Location: '/' });
+						response.end();
+					}else if(error){						
+						response.writeHead(500, { 'Content-Type': 'text/html' });
+						response.end('login Error');
+
+					}
+				}
+			);
+		}
+
+
+		});
+
+
+	});
+}
+
+
 module.exports = {
-	homeHandler,
-	publicHandler,
-	cuisineHandler,
-	addRestaurantHandler,
-	errorHandler
+  homeHandler,
+  publicHandler,
+  cuisineHandler,
+  addRestaurantHandler,
+  errorHandler,
+  signUpHandler,
+  loginHandler,
+  logOutHandler
 };

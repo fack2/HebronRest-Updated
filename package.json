@@ -1,36 +1,53 @@
 {
-    "name": "Restaurant",
-    "version": "1.0.0",
-    "description": "We've created a website that shows the user several types of cuisines to choose from, and when the user clicks on one of them, it shows a list of restaurants that serve that type of cuisine, and it allows you to click on any resturant you want and see a list of details about it, like the menu and the restaurant's name.",
-    "main": "index.js",
-    "scripts": {
-        "test": "node src/server/test/test.js | tap-spec",
-        "testdb": "node src/database/test/databaseTest.js",
-        "start": "node src/server/server.js",
-        "dev": "nodemon src/server/server.js "
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/fack2/Resturant.git"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/fack2/Resturant/issues"
-    },
-    "homepage": "https://github.com/fack2/Resturant#readme",
-    "devDependencies": {
-        "eslint": "^6.1.0",
-        "nodemon": "^1.19.1",
-        "supertest": "^4.0.2",
-        "tap-spec": "^5.0.0",
-        "tape": "^4.11.0"
-    },
-    "dependencies": {
-        "env2": "^2.2.2",
-        "express": "^4.17.1",
-        "pg": "^7.11.0",
-        "request": "^2.88.0"
-    }
+  "name": "Restaurant",
+  "version": "1.0.0",
+  "description": "We've created a website that shows the user several types of cuisines to choose from, and when the user clicks on one of them, it shows a list of restaurants that serve that type of cuisine, and it allows you to click on any resturant you want and see a list of details about it, like the menu and the restaurant's name.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node src/server/test/test.js | tap-spec",
+    "testdb": "node src/database/test/databaseTest.js",
+    "start": "node src/server/server.js",
+    "dev": "nodemon src/server/server.js ",
+    "lint": "eslint .",
+    "lintfix": "eslint . --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fack2/Resturant.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fack2/Resturant/issues"
+  },
+  "homepage": "https://github.com/fack2/Resturant#readme",
+  "devDependencies": {
+    "babel-eslint": "^9.0.0",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^17.1.1",
+    "eslint-config-prettier": "^4.3.0",
+    "eslint-config-wesbos": "0.0.19",
+    "eslint-plugin-html": "^5.0.5",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-react-hooks": "^1.6.1",
+    "nodemon": "^1.19.1",
+    "prettier": "^1.18.2",
+    "supertest": "^4.0.2",
+    "tap-spec": "^5.0.0",
+    "tape": "^4.11.0"
+  },
+  "dependencies": {
+    "alert-node": "^1.2.6",
+    "bcrypt": "^3.0.6",
+    "data-store": "^3.1.0",
+    "env2": "^2.2.2",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "pg": "^7.11.0",
+    "request": "^2.88.0"
+  }
 }
